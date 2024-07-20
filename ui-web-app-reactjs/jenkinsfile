@@ -33,5 +33,10 @@ pipeline {
             }
         }
 
+       stage('Archive Artifacts') {
+            steps {
+                archiveArtifacts artifacts: 'ui-web-app-reactjs/build/**/*'
+            }
+        }
     }
 }
