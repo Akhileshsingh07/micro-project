@@ -16,4 +16,4 @@ COPY . .
 EXPOSE 5000
 
 #This Command to serve the build artifacts
-CMD ["npm", "start", "dist"]
+CMD ["npm", "start", "dist", "-l", "5000"]
