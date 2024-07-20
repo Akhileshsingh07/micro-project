@@ -1,1 +1,13 @@
+pipeline{
+    agent any
 
+    stages{
+        stage("code checkout"){
+            steps{
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/Akhileshsingh07/micro-project.git']])
+            }
+            
+        }
+    }
+    
+}
