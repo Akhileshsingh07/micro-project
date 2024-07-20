@@ -32,6 +32,15 @@ pipeline {
                 }
             }
         }
+         // Add a step to list the contents of the build directory
+        stage('Verify Build Directory') {
+            steps {
+                dir('ui-web-app-reactjs') {
+                    sh 'if [ -d build ]; then echo "Build directory exists"; else echo "Build directory does not exist"; fi'
+                    sh 'ls -la build || echo "Build directory is empty or does not exist"'
+                }
+            }
+        }
 
        stage('Archive Artifacts') {
             steps {
