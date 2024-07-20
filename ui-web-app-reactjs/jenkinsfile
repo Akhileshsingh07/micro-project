@@ -39,5 +39,13 @@ pipeline {
                 archiveArtifacts artifacts: 'ui-web-app-reactjs/dist/**'
             }
         }
+        stage('Image Build') {
+            steps {
+                // Build the React app within the ui-web-app-reactjs directory
+                dir('ui-web-app-reactjs') {
+                    docker build -t reactjs .
+                }
+            }
+        }
     }
 }
