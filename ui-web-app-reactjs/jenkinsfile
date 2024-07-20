@@ -1,13 +1,36 @@
-pipeline{
+pipeline {
     agent any
 
-    stages{
-        stage("code checkout"){
-            steps{
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/Akhileshsingh07/micro-project.git']])
+    tools {
+        nodejs 'NodeJS'
+    }
+
+    stages {
+        stage('Code Checkout') {
+            steps {
+                checkout([$class: 'GitSCM',
+                    branches: [[name: '*/main']],
+                    userRemoteConfigs: [[url: 'https://github.com/Akhileshsingh07/micro-project.git', credentialsId: 'github']]
+                ])
             }
-            
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                // Navigate to the ui-web-app-reactjs directory and install npm dependencies
+                dir('ui-web-app-reactjs') {
+                    sh 'npm install'
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Build the React app within the ui-web-app-reactjs directory
+                dir('ui-web-app-reactjs') {
+                    sh 'npm run build'
+                }
+            }
         }
     }
-    
 }
