@@ -1,0 +1,18 @@
+# Use a lightweight base image with Node.js
+FROM node:14
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the build artifacts from the Jenkins workspace to the container
+COPY dist /app
+COPY . .
+
+# Install a static file server globally
+RUN npm install -g serve
+
+# Expose the port on which the application will be served
+EXPOSE 5000
+
+# Command to serve the build artifacts
+CMD ["serve", "-s", "dist", "-l", "5000"]
