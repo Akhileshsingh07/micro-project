@@ -14,44 +14,43 @@ pipeline {
                 ])
             }
         }
-        // Installing the dependencies-Here npm reads package.json repository and install all the dependencies in node_module directry
+
         stage('Install Dependencies') {
             steps {
-                
+                // Navigate to the ui-web-app-reactjs directory and install npm dependencies
                 dir('ui-web-app-reactjs') {
                     sh 'npm install'
                 }
             }
         }
-        // Source code build and package
+
         stage('Build') {
             steps {
-                
+                // Build the React app within the ui-web-app-reactjs directory
                 dir('ui-web-app-reactjs') {
                     sh 'npm run build'
                 }
             }
         }
         
-       // Archive the artifacts    
+
        stage('Archive Artifacts') {
             steps {
                 archiveArtifacts artifacts: 'ui-web-app-reactjs/dist/**'
             }
         }
-        // Image Build
         stage('Image Build') {
             steps {
                script {
                  
-                
+                // Build the React app within the ui-web-app-reactjs directory
                 dir('ui-web-app-reactjs') {
                    sh "docker build -t akhileshsingh1216/react-app . "
                 }
                }
             }
         }
-        // pushing the imaige to dockerHuub
+
         stage('Push Docker Image') {
             steps {
                 script {
@@ -62,11 +61,10 @@ pipeline {
                 }
             }
         }
-        // Deploy the container locally
-        stage('Deploy the container') {
+
+        stage('docker pull and deploy') {
             steps {
                 script {
-                    
                     sh 'docker stop reactjs-app || true'
                     sh 'docker rm reactjs-app || true'
                     
