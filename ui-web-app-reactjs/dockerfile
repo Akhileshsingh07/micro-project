@@ -7,7 +7,7 @@ WORKDIR /app
 
 
 # Copy the build artifacts from the Jenkins workspace to the container
-COPY ./dist /app
+COPY dist /app
 # copy all the files from repository to container
 COPY . .
 
@@ -16,4 +16,4 @@ COPY . .
 EXPOSE 5000
 
 #This Command to serve the build artifacts
-CMD ["npm", "start", "dist", "-l", "5000"]
+CMD ["npm", "start"]
